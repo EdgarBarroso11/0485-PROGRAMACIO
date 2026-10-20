@@ -12,8 +12,8 @@ int main(){
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
 	srand(time(NULL));
-	int edat, pes, minutsEscalfament, minutsTotal,serie=0,numRepeticions, repeticionsTotals=0, repeticionsMinim=50, repeticionsMaxim=0, contadorErrors=0, seriesValides;
-	float factorNivell, ppm;
+	int edat, pes, minutsEscalfament, minutsTotal,serie=1,numRepeticions, repeticionsTotals=0, repeticionsMinim=50, repeticionsMaxim=0, contadorErrors=0, seriesValides=0,diferenciaRepeticions,caloriesAcumulades;
+	float factorNivell, ppm, mitjanaRepSerie,calories;
 	char nivell;
 
 	// CONFIGURACIO EDAT PES NIVELL ENTRENAMENT
@@ -136,19 +136,22 @@ int main(){
 
 
 	do
-	{
-		serie=serie+1;
+	{	
 		printf("\nRepeticions serie %d: ",serie);
 		scanf("%d",&numRepeticions);
 		while(getchar()!='\n');
 
 		if (numRepeticions>0 && numRepeticions<=50)
 		{
+			serie++;
+			seriesValides++;
+
 			if (contadorErrors==0)
 			{
 				setColor(GREEN);
 				printf("=> Serie valida");
 				setColor(WHITE);
+
 			}
 			else
 			{
@@ -193,7 +196,9 @@ int main(){
 
 		if (numRepeticions==0)
 		{
+			setColor(GREEN);
 			printf("\n\n--> Fi del registre");
+			setColor(WHITE);
 		}
 		
 
@@ -208,10 +213,76 @@ int main(){
 	printf("\n\nRESUM ENTRENAMENT:");
 	setColor(WHITE);
 
+	printf("\n\nSeries valides: %d | Total repeticions: %d", seriesValides, repeticionsTotals);
 
+	if (serie-1!=0 && numRepeticions==0 )
+	{
+		printf("\nMaxim d'una serie: %d rep | Minim d'una serie: %d rep",repeticionsMaxim, repeticionsMinim);
+		
+		//ESTADISTIQUES DE LA SESSIO
 
+		setColor(BLUE);
+		printf("\n\nESTADISTIQUES DE LA SESSIO:");
+		setColor(WHITE);
 
+		mitjanaRepSerie=repeticionsTotals/(serie-1);
 
+		printf("\n\nMitjana: %.2f rep/serie",mitjanaRepSerie);
+
+		if (nivell=='b'||nivell=='B')
+		{
+			calories=pes*0.05;
+		}
+		else if (nivell=='m'||nivell=='M')
+		{
+			calories=pes*0.08;
+		}
+		else
+		{
+			calories=pes*0.12;
+		}
+		printf("\nCalories: %.2f kcal",calories);
+
+		diferenciaRepeticions=repeticionsMaxim-repeticionsMinim;
+		printf("\nDiferencia max-min: %d - %d = %d rep",repeticionsMaxim,repeticionsMinim,diferenciaRepeticions);
+
+		setColor(GREEN);
+		if (serie<=2)
+		{
+			printf("\n\nSessio curta. Intenta al menys 3 series la propera vegada.");
+		}
+		else if (serie<=5)
+		{
+			printf("\n\nBona sessio! Segueix aixi.");
+		}
+		else
+		{
+			printf("\n\nSessio excelent! Rendiment molt alt.");
+		}
+		setColor(WHITE);
+	}
+	else
+	{
+		setColor(BLUE);
+		printf("\n\nESTADISTIQUES DE LA SESSIO:");
+		setColor(WHITE);
+
+		printf("\n\nCap serie registrada. Torna dema amb mes energia!");
+	}
+
+		//RESUM FINAL: TAULA DE PROGRESSIÓ NOU SOCI
+
+		printf("\n\nCALORIES CREMADES ACUMULADES EN CADA UNA DE LES SERIES:\n");
+
+		for (int serie2 = 1; serie2 < serie; serie2++)
+		{
+			caloriesAcumulades=serie2*mitjanaRepSerie*calories;
+			printf("\nSerie %d: %d * %.2f * %.2f = %.2f kcal acumulades",serie2,serie2,mitjanaRepSerie,calories,caloriesAcumulades);
+		}
+		
+		
+		
+	
 	acabament();
 	return 0;
 }
