@@ -29,8 +29,7 @@ int main()
 		{
 			printf("\n\nIntrodueix la teva edat (16..80): ");
 			scanf("%d", &edat);
-			while (getchar() != '\n')
-				;
+			while (getchar() != '\n');
 		} while (edat < 16 || edat > 80);
 		setColor(GREEN);
 		printf("--> Edat acceptada");
@@ -40,8 +39,7 @@ int main()
 		{
 			printf("\n\nIntrodueix el teu pes (30..200): ");
 			scanf("%d", &pes);
-			while (getchar() != '\n')
-				;
+			while (getchar() != '\n');
 		} while (pes < 30 || pes > 200);
 		setColor(GREEN);
 		printf("--> Pes acceptat");
@@ -51,8 +49,7 @@ int main()
 		{
 			printf("\n\nIntrodueix el nivell d'entrenament ('B'-Basic, 'M'-Mitja o 'A'-Avançat): ");
 			scanf("%c", &nivell);
-			while (getchar() != '\n')
-				;
+			while (getchar() != '\n');
 		} while (nivell != 'A' && nivell != 'a' && nivell != 'M' && nivell != 'm' && nivell != 'B' && nivell != 'b');
 		setColor(GREEN);
 		printf("--> Nivell acceptat");
@@ -65,7 +62,7 @@ int main()
 		// PROCES ESCALFAMENT
 
 		setColor(BLUE);
-		printf("\n\nPROCES D'ESCALFAMENT:");
+		printf("\n\nPROCES D'ESCALFAMENT:\n");
 		setColor(WHITE);
 
 		if (nivell == 'B' || nivell == 'b')
@@ -82,16 +79,16 @@ int main()
 		}
 
 		minutsTotal = minutsEscalfament;
-
-		printf("\n\n");
+		
 		for (minutsEscalfament; minutsEscalfament > 1; minutsEscalfament--)
 		{
 			printf("%d - ", minutsEscalfament);
 			Sleep(1000);
 		}
 		printf("%d", minutsEscalfament);
-
+		
 		setColor(GREEN);
+		printf("\n\n");
 		printf("\n-->Escalfament completat");
 		setColor(WHITE);
 
@@ -248,11 +245,11 @@ int main()
 			printf("\nDiferencia max-min: %d - %d = %d rep", repeticionsMaxim, repeticionsMinim, diferenciaRepeticions);
 
 			setColor(GREEN);
-			if (serie <= 2)
+			if (serie-1 <= 2)
 			{
 				printf("\n\nSessio curta. Intenta al menys 3 series la propera vegada.");
 			}
-			else if (serie <= 5)
+			else if (serie-1 <= 5)
 			{
 				printf("\n\nBona sessio! Segueix aixi.");
 			}
@@ -261,6 +258,16 @@ int main()
 				printf("\n\nSessio excelent! Rendiment molt alt.");
 			}
 			setColor(WHITE);
+
+			// RESUM FINAL: TAULA DE PROGRESSIÓ NOU SOCI
+
+			printf("\n\nCALORIES CREMADES ACUMULADES EN CADA UNA DE LES SERIES:\n");
+
+			for (int serie2 = 1; serie2 <= serie; serie2++)
+			{
+				caloriesAcumulades = serie2 * mitjanaRepSerie * calories;
+				printf("\nSerie %d: %d * %.2f * %.2f = %.2f kcal acumulades", serie2, serie2, mitjanaRepSerie, calories, caloriesAcumulades);
+			}
 		}
 		else
 		{
@@ -271,19 +278,10 @@ int main()
 			printf("\n\nCap serie registrada. Torna dema amb mes energia!");
 		}
 
-		// RESUM FINAL: TAULA DE PROGRESSIÓ NOU SOCI
-
-		printf("\n\nCALORIES CREMADES ACUMULADES EN CADA UNA DE LES SERIES:\n");
-
-		for (int serie2 = 1; serie2 <= serie; serie2++)
-		{
-			caloriesAcumulades = serie2 * mitjanaRepSerie * calories;
-			printf("\nSerie %d: %d * %.2f * %.2f = %.2f kcal acumulades", serie2, serie2, mitjanaRepSerie, calories, caloriesAcumulades);
-		}
-
+		
 		printf("\n\n\nHi ha una altre soci? (S/N):");
 		scanf("%c", &soci2);
-
+		cls();
 	} while (soci2=='S'||soci2=='s');
 
 	acabament();
