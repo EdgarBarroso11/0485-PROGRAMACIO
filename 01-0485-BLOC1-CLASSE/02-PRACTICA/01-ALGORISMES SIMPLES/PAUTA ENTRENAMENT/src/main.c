@@ -14,7 +14,7 @@ int main()
 	SetConsoleCP(CP_UTF8);
 	srand(time(NULL));
 	int edat, pes, minutsEscalfament, minutsTotal, serie = 1, numRepeticions, repeticionsTotals = 0, repeticionsMinim = 50, repeticionsMaxim = 0, contadorErrors = 0, seriesValides = 0, diferenciaRepeticions;
-	float factorNivell, ppm, mitjanaRepSerie, calories, caloriesAcumulades;
+	float factorNivell, ppm, mitjanaRepSerie, calories, caloriesAcumulades,caloriesCremades;
 	char nivell, soci2;
 
 	do
@@ -239,7 +239,9 @@ int main()
 				calories = pes * 0.12;
 			}
 
-			printf("\nCalories: %.2f kcal", calories);
+			caloriesCremades=calories*repeticionsTotals;
+			
+			printf("\nCalories: %.2f kcal", caloriesCremades);
 
 			diferenciaRepeticions = repeticionsMaxim - repeticionsMinim;
 			printf("\nDiferencia max-min: %d - %d = %d rep", repeticionsMaxim, repeticionsMinim, diferenciaRepeticions);
@@ -263,7 +265,7 @@ int main()
 
 			printf("\n\nCALORIES CREMADES ACUMULADES EN CADA UNA DE LES SERIES:\n");
 
-			for (int serie2 = 1; serie2 <= serie; serie2++)
+			for (int serie2 = 1; serie2 < serie; serie2++)
 			{
 				caloriesAcumulades = serie2 * mitjanaRepSerie * calories;
 				printf("\nSerie %d: %d * %.2f * %.2f = %.2f kcal acumulades", serie2, serie2, mitjanaRepSerie, calories, caloriesAcumulades);
@@ -278,9 +280,13 @@ int main()
 			printf("\n\nCap serie registrada. Torna dema amb mes energia!");
 		}
 
-		
-		printf("\n\n\nHi ha una altre soci? (S/N):");
-		scanf("%c", &soci2);
+		do
+		{
+			printf("\n\n\nHi ha una altre soci? (S/N):");
+			scanf("%c", &soci2);
+			while(getchar()!='\n');
+		} while (!(soci2=='S'||soci2=='s'||soci2=='n'||soci2=='N'));
+
 		cls();
 	} while (soci2=='S'||soci2=='s');
 
