@@ -137,8 +137,7 @@ int main()
 		{
 			printf("\nRepeticions serie %d: ", serie);
 			scanf("%d", &numRepeticions);
-			while (getchar() != '\n')
-				;
+			while (getchar() != '\n');
 
 			if (numRepeticions > 0 && numRepeticions <= 50)
 			{
