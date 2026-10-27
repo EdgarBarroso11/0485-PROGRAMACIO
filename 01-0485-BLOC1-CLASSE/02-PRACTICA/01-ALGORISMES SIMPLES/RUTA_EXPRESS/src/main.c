@@ -27,7 +27,8 @@ int main()
 	{
 		printf("Tipus de vehicle: M(Moto), F(Furgoneta) o C(Camio):");
 		scanf("%c", &vehicle);
-		while (getchar() != '\n');
+		while (getchar() != '\n')
+;
 
 		if (!(vehicle == 'M' || vehicle == 'm' || vehicle == 'F' || vehicle == 'f' || vehicle == 'C' || vehicle == 'c'))
 		{
