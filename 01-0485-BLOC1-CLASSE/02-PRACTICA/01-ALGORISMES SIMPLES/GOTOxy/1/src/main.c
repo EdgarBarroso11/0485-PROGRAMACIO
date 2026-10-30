@@ -24,7 +24,6 @@ int main(){
 
 	for (int lletra = 1; lletra < 21; lletra++)
 	{
-		
 		if (lletra%2!=0)
 		{
 			for ( int a = num; a < 21; a++)
