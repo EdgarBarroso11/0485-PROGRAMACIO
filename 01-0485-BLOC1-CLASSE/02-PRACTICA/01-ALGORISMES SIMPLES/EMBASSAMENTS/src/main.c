@@ -14,7 +14,7 @@ int main(){
 	srand(time(NULL));
 	
 	int hora=1,y=7,comporta1,comporta2,numAleatori,cabalMax=1500,color;
-	float cabalEmbassament, cabalRiu1,cabalRiu2,estat,percentatge,totalRius,estatAnterior;
+	float cabalEmbassament, cabalRiu1,cabalRiu2,estat,percentatge,totalRius,estatAnterior,percentatgeMitja=0,cabalMitja=0,cabalHoraMaxim=0,cabalHoraMinim=1500;
 	printf("BENVINGUTS AL SISTEMA DE CONTROL DE L'EMBASSAMENT DE VALLFORNERS\nINDICA EL TEU NOM I COGNOM");
 	do
 	{
@@ -81,10 +81,34 @@ int main(){
 			color=4;
 			setColor(color);
 		}
+		
+		if (estat>cabalHoraMaxim)
+		{
+			cabalHoraMaxim=estat;
+		}
+		if (estat<cabalHoraMinim)
+		{
+			cabalHoraMinim=estat;
+		}
+		
+		cabalMitja=estat+cabalMitja;
+	
 		estatAnterior=estat;
 		
+		percentatgeMitja=percentatge+percentatgeMitja;
+
+		if (cabalRiu1==0)
+		{
+			cabalRiu1=rand()%3;
+		}
+		if (cabalRiu2==0)
+		{
+			cabalRiu2=rand()%3;
+		}
+
+
 		gotoxy(1,y);
-		printf("%2d     %.2f      %.2f       %.2f    %.2f    %.2f      %d        %d",hora,estat,percentatge,cabalRiu1,cabalRiu2,totalRius,comporta1,comporta2);
+		printf("%d     %.2f      %.2f       %.2f    %.2f    %.2f      %d        %d",hora,estat,percentatge,cabalRiu1,cabalRiu2,totalRius,comporta1,comporta2);
 		numAleatori = rand() % 2;
 
 		if (numAleatori==0)
@@ -98,15 +122,6 @@ int main(){
 			cabalRiu2=cabalRiu2-rand()%11*cabalRiu2/100;
 		}
 
-		if (cabalRiu1==0)
-		{
-			cabalRiu1=rand()%3;
-		}
-		if (cabalRiu2==0)
-		{
-			cabalRiu2=rand()%3;
-		}
-		
 		estat=estat+totalRius;
 
 		if (comporta1==1&&comporta2==0)
@@ -121,23 +136,31 @@ int main(){
 		hora++;
 	} while (hora<=23&&percentatge<=95);
 
-	// if (percentatge>=95&&percentatge<100)
-	// {
-	// 	("\n\n\nEVACUACIO");
-	// }
-	// else if(percentatge>100)
-	// {
+	if (percentatge>=95&&percentatge<100)
+	{
+		printf("%c",7);
+		("\n\n\nEVACUACIO");
+	}
+	else if(percentatge>100)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			Sleep(1000);
+			printf("%c",7);
+		}
+		("\n\n\nEVACUACIO ZONA");
+	}
 
-	// }
-
-	
 	setColor(WHITE);
 
+	cabalMitja=cabalMitja/hora-1;	
+	percentatgeMitja=percentatgeMitja/hora-1;
 
-	
-	
-
-
+	printf("\nRESUM");
+	printf("\nEl cabal maxim de l'embassament ha sigut: %.2f",cabalHoraMaxim);
+	printf("\nEl cabal minim de l'embassament ha sigut: %.2f",cabalHoraMinim);
+	printf("\nEl cabal mitja ha sigut: %.2f",cabalMitja);
+	printf("\nEl percentatge mitja ha sigut: %.2f%%",percentatgeMitja);
 
 	acabament();
 	return 0;
